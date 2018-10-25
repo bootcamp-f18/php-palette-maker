@@ -7,6 +7,17 @@
         return pg_fetch_all($result);
     }
 
+    function allFilledPalettes() {
+        $sql = "SELECT DISTINCT palette_id FROM color_palette ORDER BY palette_id";
+        $result = pg_query(getDb(), $sql);
+        $palettes = pg_fetch_all($result);
+        $ids = [];
+        foreach ($palettes as $palette) {
+            array_push($ids, $palette["palette_id"]);
+        }
+        return $ids;
+    }
+
     function addPalette($name) {
         $sql = "INSERT INTO palette (name) VALUES ('$name')";
         $result = pg_query(getDb(), $sql);

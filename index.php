@@ -63,7 +63,8 @@
     // Load data
     $colorList = getColorList();
     $paletteList = getPaletteList();
-
+    $usedColors = allUsedColors();
+    $filledPalettes = allFilledPalettes();
 ?>
 
     <div class="row mt-4">
@@ -87,7 +88,18 @@
                             <form method="post" action="">
                                 <input type="hidden" name="paletteid" value="<?=$palette["id"]?>">
                                 <input type="hidden" name="action" value="deletepalette">
+<?php
+    if (in_array($palette["id"], $filledPalettes)) {
+?>
+                                <button disabled class="btn p-0 btn-light" type="submit"><i class="text-secondary far fa-trash-alt"></i></button>
+<?php
+    }
+    else {
+?>
                                 <button class="btn p-0 btn-light" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+<?php
+    }
+?>
                             </form>
                         </div>
                     </div>
@@ -169,7 +181,18 @@
                         <form method="post" action="">
                             <input type="hidden" name="colorid" value="<?=$color["id"]?>">
                             <input type="hidden" name="action" value="deletecolor">
+<?php
+    if (in_array($color["id"], $usedColors)) {
+?>
+                            <button disabled class="btn" type="submit"><i class="text-secondary far fa-trash-alt"></i></button>
+<?php
+    }
+    else {
+?>
                             <button class="btn" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+<?php
+    }
+?>
                         </form>
                     </div>
                 </div>
