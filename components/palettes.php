@@ -58,7 +58,11 @@
                 WHERE cp.palette_id = " . $palette_id . "
                 ORDER BY c.name";
         $result = pg_query(getDb(), $sql);
-        return pg_fetch_all($result);
+        $all = pg_fetch_all($result);
+        if ($all) {
+            return $all;
+        }
+        return [];
     }
 
     function deleteColorFromPalette($palette_id, $color_id) {
