@@ -21,7 +21,16 @@
     }
 
     function deletePalette($id) {
-
+        $sql = "DELETE FROM palette WHERE id = " . $id;
+        $result = pg_query(getDb(), $sql);
+        if ($result) {
+            $GLOBALS["statusMessage"] = "The palette was deleted.";
+            $GLOBALS["statusMessageClass"] = "alert-success";
+        }
+        else {
+            $GLOBALS["statusMessage"] = "The palette was not deleted.";
+            $GLOBALS["statusMessageClass"] = "alert-danger";
+        }
     }
 
     function getPaletteColors($palette_id) {
