@@ -47,6 +47,11 @@
             $safeColorId = htmlentities($_POST["colorid"]);
             deleteColorFromPalette($safePaletteId, $safeColorId);
             break;
+        case "addcolortopalette":
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            $safeColorId = htmlentities($_POST["colorid"]);
+            addColorToPalette($safePaletteId, $safeColorId);
+            break;
     }
 
 
@@ -88,29 +93,43 @@
                     </div>
                     <div class="card-body">
 
-
 <?php
     foreach (getPaletteColors($palette["id"]) as $color) {
 ?>
-        <div class="row">
-            <div class="littleSwatch my-auto" style="background-color: #<?=$color["hex"]?>"></div>
-            <div class="col my-auto"><?=$color["name"]?>, <code>#<?=$color["hex"]?></code></div>
-            <div class="text-right my-auto">
-                <form method="post" action="">
-                    <input type="hidden" name="colorid" value="<?=$color["id"]?>">
-                    <input type="hidden" name="paletteid" value="<?=$palette["id"]?>">
-                    <input type="hidden" name="action" value="deletecolorfrompalette">
-                    <button class="btn btn-sm" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
-                </form>
-            </div>
-        </div>
+                        <div class="row">
+                            <div class="littleSwatch my-auto" style="background-color: #<?=$color["hex"]?>"></div>
+                            <div class="col my-auto"><?=$color["name"]?>, <code>#<?=$color["hex"]?></code></div>
+                            <div class="text-right my-auto">
+                                <form method="post" action="">
+                                    <input type="hidden" name="colorid" value="<?=$color["id"]?>">
+                                    <input type="hidden" name="paletteid" value="<?=$palette["id"]?>">
+                                    <input type="hidden" name="action" value="deletecolorfrompalette">
+                                    <button class="btn btn-sm" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+                                </form>
+                            </div>
+                        </div>
 <?php
     }
 ?>
-
+                        <form class="form-inline mt-2" method="post" action="">
+                            <div class="form-group">
+                                <select name="colorid" class="custom-select-sm mr-2">
+                                    <option value="">Choose a color to add...</option>
+<?php
+    foreach (getAddableColors($palette["id"]) as $color) {
+?>
+                                    <option value="<?=$color["id"]?>"><?=$color["name"]?></option>
+<?php
+    }
+?>
+                                </select>
+                            </div>
+                            <input type="hidden" name="action" value="addcolortopalette">
+                            <input type="hidden" name="paletteid" value="<?=$palette["id"]?>">
+                            <button type="submit" class="btn btn-sm btn-success">Add</button>
+                        </form>
                     </div>
                 </div>
-
 <?php
     }
 ?>

@@ -33,6 +33,14 @@
         }
     }
 
+    function getAddableColors($palette_id) {
+        $sql = "SELECT id, name, hex FROM color
+                WHERE color.id NOT IN (SELECT color_id FROM color_palette WHERE palette_id = " . $palette_id . ")
+                ORDER BY name";
+        $result = pg_query(getDb(), $sql);
+        return pg_fetch_all($result);
+    }
+
     function getPaletteColors($palette_id) {
         $sql = "SELECT c.id, c.name, c.hex FROM color AS c
                 JOIN color_palette AS cp ON cp.color_id = c.id
@@ -43,7 +51,7 @@
     }
 
     function deleteColorFromPalette($palette_id, $color_id) {
-        $sql = "DELETE FROM colorkhkhk_palette WHERE color_id = " . $color_id . " and palette_id = " . $palette_id;
+        $sql = "DELETE FROM color_palette WHERE color_id = " . $color_id . " and palette_id = " . $palette_id;
         $result = pg_query(getDb(), $sql);
         if ($result) {
             $GLOBALS["statusMessage"] = "The selected color was removed from the palette.";
@@ -53,7 +61,19 @@
             $GLOBALS["statusMessage"] = "Could not remove the selected color from the palette.";
             $GLOBALS["statusMessageClass"] = "alert-danger";
         }
+    }
 
+    function addColorToPalette($palette_id, $color_id) {
+        $sql = "INSERT INTO color_palette (color_id, palette_id) VALUES ($color_id, $palette_id)";
+        $result = pg_query(getDb(), $sql);
+        if ($result) {
+            $GLOBALS["statusMessage"] = "The selected color was added to the palette.";
+            $GLOBALS["statusMessageClass"] = "alert-success";
+        }
+        else {
+            $GLOBALS["statusMessage"] = "Could not add the selected color to the palette.";
+            $GLOBALS["statusMessageClass"] = "alert-danger";
+        }
     }
 
 ?>
