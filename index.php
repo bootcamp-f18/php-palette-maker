@@ -34,6 +34,14 @@
             $safeColorHex = htmlentities($_POST["colorhex"]);
             addColor($safeColorName, $safeColorHex);
             break;
+        case "addpalette":
+            $safePaletteName = htmlentities($_POST["palettename"]);
+            addPalette($safePaletteName);
+            break;
+        case "deletepalette":
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            deletePalette($safePaletteId);
+            break;
     }
 
 
@@ -52,11 +60,34 @@
 
         <div class="col col-12 col-md-6">
             <h3 class="text-center">Palettes</h3>
+            <form class="form-inline mt-4 mb-4" method="post" action="">
+                <input class="form-control mr-2" name="palettename" value="" placeholder="Palette name...">
+                <button type="submit" class="btn btn-success">Add</button>
+                <input type="hidden" name="action" value="addpalette">
+            </form>
+            <div>
+
+<?php
+    foreach ($paletteList as $palette) {
+?>
+        <p><?=$palette["name"]?></p>
+<?php
+    }
+?>
+
+            </div>
+
+
+
+
+
+
         </div>
+
+
 
         <div class="col col-12 col-md-6">
             <h3 class="text-center">Colors</h3>
-
             <form class="form-inline mt-4 mb-4" method="post" action="">
                 <input class="form-control mr-2" name="colorname" value="" placeholder="Color name...">
                 <div class="col input-group mr-2">
@@ -68,7 +99,6 @@
                 <button type="submit" class="btn btn-success">Add</button>
                 <input type="hidden" name="action" value="addcolor">
             </form>
-
             <div>
 <?php
     foreach ($colorList as $color) {
@@ -84,7 +114,6 @@
                         </form>
                     </div>
                 </div>
-
 <?php
     }
 ?>
