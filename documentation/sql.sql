@@ -12,8 +12,8 @@ CREATE TABLE palette (
 );
 
 CREATE TABLE color_palette (
-    color_id INTEGER NOT NULL,
-    palette_id INTEGER NOT NULL
+    color_id INTEGER REFERENCES color(id),
+    palette_id INTEGER REFERENCES palette(id)
 );
 
 
@@ -79,3 +79,9 @@ INSERT INTO color_palette (color_id, palette_id) VALUES (14,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (15,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (16,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (12,3);
+
+
+-- Clean out tables so testing data can be refreshed
+DROP TABLE color_palette;
+DROP TABLE color;
+DROP TABLE palette;

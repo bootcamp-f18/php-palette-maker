@@ -70,7 +70,35 @@
 <?php
     foreach ($paletteList as $palette) {
 ?>
-        <p><?=$palette["name"]?></p>
+                <div class="card mb-3">
+                    <div class="card-header clearfix">
+                        <div class="float-left pt-1"><h6><?=$palette["name"]?></h6></div>
+                        <div class="float-right">
+                            <form method="post" action="">
+                                <input type="hidden" name="colorid" value="<?=$color["id"]?>">
+                                <input type="hidden" name="action" value="deletecolor">
+                                <button class="btn p-0 btn-light" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+
+<?php
+
+    foreach (getPaletteColors($palette["id"]) as $color) {
+
+        echo "<p>" . $color["name"] . "</p>";
+
+    }
+
+?>
+
+
+
+                    </div>
+                </div>
+
 <?php
     }
 ?>

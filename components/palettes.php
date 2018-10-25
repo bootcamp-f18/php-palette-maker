@@ -24,4 +24,13 @@
 
     }
 
+    function getPaletteColors($palette_id) {
+        $sql = "SELECT c.id, c.name, c.hex FROM color AS c
+                JOIN color_palette AS cp ON cp.color_id = c.id
+                WHERE cp.palette_id = " . $palette_id . "
+                ORDER BY c.name";
+        $result = pg_query(getDb(), $sql);
+        return pg_fetch_all($result);
+    }
+
 ?>
