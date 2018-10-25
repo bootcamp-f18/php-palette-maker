@@ -8611,9 +8611,14 @@ h3 {
     border-color: #dee2e6;
   }
 }
-.colorSwatch {
+.bigSwatch {
   height: 50px;
   width: 50px;
+}
+
+.littleSwatch {
+  height: 25px;
+  width: 25px;
 }
 
 /*# sourceMappingURL=output.css.map */

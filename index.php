@@ -42,6 +42,11 @@
             $safePaletteId = htmlentities($_POST["paletteid"]);
             deletePalette($safePaletteId);
             break;
+        case "deletecolorfrompalette":
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            $safeColorId = htmlentities($_POST["colorid"]);
+            deleteColorFromPalette($safePaletteId, $safeColorId);
+            break;
     }
 
 
@@ -85,16 +90,23 @@
 
 
 <?php
-
     foreach (getPaletteColors($palette["id"]) as $color) {
-
-        echo "<p>" . $color["name"] . "</p>";
-
-    }
-
 ?>
-
-
+        <div class="row">
+            <div class="littleSwatch my-auto" style="background-color: #<?=$color["hex"]?>"></div>
+            <div class="col my-auto"><?=$color["name"]?>, <code>#<?=$color["hex"]?></code></div>
+            <div class="text-right my-auto">
+                <form method="post" action="">
+                    <input type="hidden" name="colorid" value="<?=$color["id"]?>">
+                    <input type="hidden" name="paletteid" value="<?=$palette["id"]?>">
+                    <input type="hidden" name="action" value="deletecolorfrompalette">
+                    <button class="btn btn-sm" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+                </form>
+            </div>
+        </div>
+<?php
+    }
+?>
 
                     </div>
                 </div>
@@ -132,7 +144,7 @@
     foreach ($colorList as $color) {
 ?>
                 <div class="row mb-4">
-                    <div class="colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
+                    <div class="bigSwatch" style="background-color: #<?=$color["hex"]?>"></div>
                     <div class="col my-auto"><?=$color["name"]?>, <code>#<?=$color["hex"]?></code></div>
                     <div class="text-right my-auto">
                         <form method="post" action="">

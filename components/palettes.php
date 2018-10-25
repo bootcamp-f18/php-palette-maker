@@ -33,4 +33,18 @@
         return pg_fetch_all($result);
     }
 
+    function deleteColorFromPalette($palette_id, $color_id) {
+        $sql = "DELETE FROM colorkhkhk_palette WHERE color_id = " . $color_id . " and palette_id = " . $palette_id;
+        $result = pg_query(getDb(), $sql);
+        if ($result) {
+            $GLOBALS["statusMessage"] = "The selected color was removed from the palette.";
+            $GLOBALS["statusMessageClass"] = "alert-success";
+        }
+        else {
+            $GLOBALS["statusMessage"] = "Could not remove the selected color from the palette.";
+            $GLOBALS["statusMessageClass"] = "alert-danger";
+        }
+
+    }
+
 ?>
